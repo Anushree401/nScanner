@@ -1,20 +1,18 @@
-# Use a lightweight Python base image, base image is important for Render to detect it's a web service
+# Base image with Python
 FROM python:3.10-slim
 
-# Install nmap and dependencies
-RUN apt-get update && apt-get install -y nmap
+# Install system dependencies
+RUN apt-get update && apt-get install -y nmap && apt-get clean
 
 # Set working directory
-WORKDIR /app 
+WORKDIR /app
 
-# Copy all project files to the image
-COPY . .
-
-# Install Python dependencies
+# Copy requirements and install
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port (important for Render to detect it's a web service)
-EXPOSE 10000
+# Copy all source files
+COPY . .
 
-# Start the Flask app
+# Run the app
 CMD ["python", "app.py"]
