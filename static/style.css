@@ -1,0 +1,131 @@
+body {
+  font-family: 'Orbitron', sans-serif;
+  background-color: #0b0e1b;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav {
+  background-color: #1a1e2f;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00ffe1;
+  letter-spacing: 2px;
+}
+
+nav .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 1rem;
+}
+
+nav .nav-links a:hover {
+  text-decoration: underline;
+}
+
+header {
+  padding: 40px 20px 20px;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+  color: #00ffe1;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #bbb;
+}
+
+form {
+  margin: 20px auto;
+  max-width: 500px;
+}
+
+input[type="text"] {
+  padding: 12px 20px;
+  width: 70%;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.scan-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.scan-button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  background-color: #1f2439;
+  color: #00ffe1;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.scan-button:hover {
+  transform: scale(1.05);
+}
+
+.results {
+  margin: 40px auto;
+  width: 80%;
+  background: #1a1e2f;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.results h2 {
+  margin-top: 0;
+  color: #00ffe1;
+}
+
+.results h3 {
+  color: #00ffe1;
+  margin-top: 20px;
+}
+.results p, .results ul {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+.results ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.results li {
+  margin-bottom: 6px;
+}
+
+.results ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.results li {
+  margin-bottom: 6px;
+  font-family: monospace;
+  font-size: 0.95rem;
+}
