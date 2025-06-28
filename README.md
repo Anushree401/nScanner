@@ -99,7 +99,7 @@
 ## 📄 License
 
 This project is under a **Restricted Educational Use License**.
-See [`LICENSE`](LICENSE) for full terms.
+See [`LICENSE`](introduction/LICENSE) for full terms.
 
 ---
 
