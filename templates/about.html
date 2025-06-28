@@ -2,52 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>About - nScanner</title>
+    <title>About – nScanner</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>📘 About nScanner</h1>
-        <a href="{{ url_for('index') }}">Back to Home</a>
-
-        <p><strong>nScanner</strong> is a network security analysis tool designed for educational and research purposes. It combines TCP scanning and passive reconnaissance with a clean web-based interface using Flask and Jinja2. The project helps you learn how network discovery tools work under the hood.</p>
-
-        <h2>🚀 Features</h2>
+        <h1>About nScanner</h1>
+        <p><strong>nScanner</strong> is an information security tool for scanning, reconnaissance, and passive intelligence gathering. This project was developed by <strong>Anushree Balaji</strong> as part of a cybersecurity initiative.</p>
+        
+        <h2>Features</h2>
         <ul>
-            <li>TCP Port Scanner using <code>python-nmap</code></li>
-            <li>Passive recon using IPWhois API</li>
-            <li>Matplotlib-based histogram for course data (if applicable)</li>
-            <li>Flask & Jinja2-based dynamic HTML rendering</li>
-            <li>Simple and lightweight UI</li>
+            <li>Port Scanning</li>
+            <li>Passive Recon using IPWhois</li>
+            <li>Flask Web Interface</li>
+            <li>Exportable Reports and Visualizations</li>
         </ul>
 
-        <h2>👩‍💻 Developer</h2>
-        <p>Created by <strong>Anushree Balaji</strong> (2025)</p>
+        <h2>License</h2>
+        <p>This tool is licensed under a <strong>Custom Restricted Use License</strong>. You are allowed to use it for personal, educational, or research purposes only. <br><br>
+        For commercial use, contact: <a href="mailto:anushree1606balaji@gmail.com">anushree1606balaji@gmail.com</a></p>
 
-        <h2>🔗 GitHub Repository</h2>
-        <p><a href="https://github.com/Anushree401/nScanner" target="_blank">github.com/Anushree401/nScanner</a></p>
-
-        <h2>📄 License</h2>
-        <p><strong>nScanner License – Custom Restricted Use</strong></p>
-        <p>Copyright &copy; 2025 Anushree Balaji</p>
-
-        <p>This software is <strong>not open-source</strong> and is provided under a restricted license for <strong>educational and non-commercial use only</strong>.</p>
-
-        <ul>
-            <li>✅ You may use this software for personal, educational, or research purposes, with proper credit.</li>
-            <li>🚫 Commercial use is not allowed without prior written permission.</li>
-            <li>🚫 Redistribution or modification for public/private use is also not permitted without consent.</li>
-        </ul>
-
-        <p><strong>Commercial Use Requests:</strong><br>
-        Email: <a href="mailto:anushree1606balaji@gmail.com">anushree1606balaji@gmail.com</a></p>
-
-        <p><strong>Disclaimer:</strong><br>
-        This software is provided "as is", without any warranties. The author is not liable for misuse or damage resulting from its use.</p>
-
-        <p>By using this software, you agree to comply with all license terms.</p>
-
-        <p><a href="{{ url_for('index') }}">← Back to Home</a></p>
+        <a class="btn" href="{{ request.path }}">🔄 Refresh</a>
+        <a class="btn" href="{{ url_for('index') }}">🏠 Home</a>
+        <a class="btn" href="https://github.com/Anushree401/nScanner" target="_blank">📂 View on GitHub</a>
     </div>
 </body>
 </html>
