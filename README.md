@@ -118,8 +118,3 @@ See [`LICENSE`](introduction/LICENSE) for full terms.
 This project is under a restricted-use license.
 If you’d like to collaborate or reuse the code under another license, contact me via email.
 
-```
-
----
-
-```
