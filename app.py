@@ -17,7 +17,7 @@ limiter = Limiter(
 @app.route('/', methods=['GET'])
 # @limiter.limit("5 per minute")
 def home():
-    return redirect(url_for('home')) 
+    return render_template("home.html")
 
 @app.route('/scan', methods=['POST'])
 # @limiter.limit("5 per minute")
