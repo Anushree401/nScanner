@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error | nScanner</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav>
+    <div class="logo">nScanner</div>
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="https://github.com/Anushree401/nScanner" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <div class="results" style="text-align: center;">
+    <h2 style="color: #ff4d4d;">⚠️ An Error Occurred</h2>
+    <p>{{ error_message or "Something went wrong during the scan or request." }}</p>
+
+    <a href="{{ url_for('index') }}" class="btn">🔁 Go Back</a>
+  </div>
+</body>
+</html>
