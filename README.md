@@ -1,4 +1,3 @@
-````markdown
 # 🔍 nScanner – Web-Based InfoSec Recon Tool
 
 **nScanner** is a cybersecurity utility that performs **active port scanning** and **passive reconnaissance** on domains or IPs. Built with **Flask**, **Python-Nmap**, and **IPWhois**, it’s designed to be simple, educational, and powerful.
@@ -44,7 +43,7 @@
    ```bash
    git clone https://github.com/Anushree401/nScanner.git
    cd nScanner
-````
+   ```
 
 2. **Create virtual environment and activate**
 
