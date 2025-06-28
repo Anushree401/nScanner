@@ -21,11 +21,11 @@
 
 ### 📸 Screenshot
 
-![nScanner Screenshot](demo/homepage.png)
+![nScanner Screenshot](introduction/demo/homepage.png)
 
 ### 📹 Demo Video
 
-[![Watch the Demo](demo/screenshot.png)](demo/scanning.mp4)
+[![Watch the Demo](introduction/demo/screenshot.png)](introduction/demo/scanning.mp4)
 *Click the image above to download and view the video.*
 
 ---
