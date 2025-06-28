@@ -41,7 +41,7 @@ def index():
                 except Exception as e:
                     recon = {"error": f"[!] Error during passive recon: {str(e)}"}
 
-    return render_template("scanner_index.html", result=result, recon=recon)
+    return render_template("index.html", result=result, recon=recon)
 
 @app.route("/about")
 def about():

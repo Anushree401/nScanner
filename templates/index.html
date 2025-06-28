@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nScanner</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+  <nav>
+    <div class="logo">nScanner</div>
+    <div class="nav-links">
+      <a href="{{ request.path }}">Home</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="https://github.com/Anushree401/nScanner">GitHub</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Scan for Threats</h1>
+    <p>Enter a domain or IP address to scan</p>
+  </header>
+
+  <form method="POST">
+    <input type="text" name="target" placeholder="example.com or 8.8.8.8" required>
+    <br><br>
+    <input type="text" name="ports" placeholder="Optional: Ports (e.g., 80,443)">
+    <br><br>
+    <label style="font-size: 0.9rem;">
+      <input type="checkbox" name="verbose"> Verbose Mode
+    </label>
+
+    <div class="scan-buttons">
+      <button type="submit" name="scan" value="active" class="scan-button">ACTIVE<br>SCAN</button>
+      <button type="submit" name="scan" value="passive" class="scan-button">PASSIVE<br>SCAN</button>
+    </div>
+  </form>
+
+  {% if result %}
+    <div class="results">
+      <h2>Active Scan Results</h2>
+      <ul>
+      {% if result | length == 0 %}
+        <p>No open ports found or scan returned no data.</p>
+      {% else %}
+        {% for line in result %}
+          {% if '[+]' in line %}
+            <li style="color: #00ff99;"><strong>✔</strong> {{ line | safe }}</li>
+          {% elif '[-]' in line %}
+            <li style="color: #ffaa00;"><strong>•</strong> {{ line | safe }}</li>
+          {% else %}
+            <li style="color: #ccc;">{{ line | safe }}</li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      </ul>
+
+      <!-- 🔍 Debug: Raw result display -->
+      <pre style="color:#aaa;">{{ result | join('\n') }}</pre>
+    </div>
+  {% endif %}
+
+  {% if recon %}
+    <div class="results">
+      <h2>Passive Recon Data</h2>
+
+      <h3>IP Address</h3>
+      <p>{{ recon.ip_address }}</p>
+
+      <h3>HTTP Headers</h3>
+      <ul>
+        {% for header, value in recon.http_headers.items() %}
+          <li><strong>{{ header }}:</strong> {{ value }}</li>
+        {% endfor %}
+      </ul>
+
+      <h3>IP Analysis</h3>
+      <ul>
+        <li><strong>City:</strong> {{ recon.ip_analysis.city or 'N/A' }}</li>
+        <li><strong>Region:</strong> {{ recon.ip_analysis.region or 'N/A' }}</li>
+        <li><strong>Country:</strong> {{ recon.ip_analysis.country or 'N/A' }}</li>
+        <li><strong>ISP:</strong> {{ recon.ip_analysis.org or 'N/A' }}</li>
+        <li><strong>Hostname:</strong> {{ recon.ip_analysis.hostname or 'N/A' }}</li>
+      </ul>
+
+      <h3>WHOIS Info</h3>
+      <ul>
+        <li><strong>Org:</strong> {{ recon.whois_data.asn_description or 'N/A' }}</li>
+        <li><strong>Registered Date:</strong> {{ recon.whois_data.asn_date or 'N/A' }}</li>
+        <li><strong>Country Code:</strong> {{ recon.whois_data.asn_country_code or 'N/A' }}</li>
+      </ul>
+    </div>
+  {% endif %}
+</body>
+</html>
