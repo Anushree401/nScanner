@@ -1,8 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, request, limiter
+from flask import Flask, render_template, redirect, url_for, request
 import requests
 import json 
 from scanner import PassiveScanner, ActiveScanner
 import subprocess
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 
