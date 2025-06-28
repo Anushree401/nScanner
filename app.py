@@ -9,7 +9,7 @@ from flask_limiter.util import get_remote_address
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
-@limiter.limit("5 per minute")
+@Limiter.limit("5 per minute")
 def index():
     result = []
     recon = {}
