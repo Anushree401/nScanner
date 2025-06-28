@@ -11,10 +11,9 @@
   <nav>
     <div class="logo">nScanner</div>
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Docs</a>
-      <a href="#">GitHub</a>
+      <a href="{{ request.path }}">Home</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="https://github.com/Anushree401/nScanner">GitHub</a>
     </div>
   </nav>
 
