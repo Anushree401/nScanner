@@ -11,15 +11,15 @@
   <nav>
     <div class="logo">nScanner</div>
     <div class="nav-links">
-      <a href="{{ request.path }}">Home</a>
-      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('scanner_index') }}">Home</a>
+      <a href="{{ request.path }}">About</a>
       <a href="https://github.com/Anushree401/nScanner" target="_blank">GitHub</a>
     </div>
   </nav>
 
   <header>
     <h1>About This Tool</h1>
-    <p>Built for security learning and scanning with style 🛡️</p>
+    <p>Built for security learning and scanning</p>
   </header>
 
   <div class="results">
@@ -28,7 +28,7 @@
       <strong>nScanner</strong> is a lightweight cybersecurity scanner designed to perform both active and passive reconnaissance. It’s crafted by <strong>Anushree Balaji</strong> for students and InfoSec enthusiasts.
     </p>
 
-    <h3>🚀 Features</h3>
+    <h3> <strong>Features</strong></h3>
     <ul>
       <li>TCP Port Scanning</li>
       <li>IP & Header Reconnaissance</li>
@@ -36,7 +36,7 @@
       <li>Data Visualization (histograms)</li>
     </ul>
 
-    <h3>📜 License: Custom Restricted Use</h3>
+    <h3><strong>License: Custom Restricted Use</strong></h3>
     <p>This software is <strong>NOT open-source</strong>. Usage is restricted as follows:</p>
     <ul>
       <li>✅ Free for personal, educational, or research use</li>
@@ -48,10 +48,9 @@
       📧 <a href="mailto:anushree1606balaji@gmail.com">anushree1606balaji@gmail.com</a>
     </p>
 
-    <h3>🔗 Links</h3>
+    <h3>Links</h3>
     <ul>
       <li><a href="https://github.com/Anushree401/nScanner" target="_blank">View on GitHub</a></li>
-      <li><a href="{{ request.path }}">Refresh Page</a></li>
     </ul>
 
     <p style="color: #aaa; font-size: 0.85rem; margin-top: 2em;">
