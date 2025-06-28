@@ -11,7 +11,7 @@
   <nav>
     <div class="logo">nScanner</div>
     <div class="nav-links">
-      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('home') }}">Home</a>
       <a href="{{ url_for('about') }}">About</a>
       <a href="https://github.com/Anushree401/nScanner" target="_blank">GitHub</a>
     </div>
@@ -22,7 +22,8 @@
     <p>Enter a domain or IP address to scan</p>
   </header>
 
-  <form method="POST">
+  <!-- ✅ Set form to POST to /scan -->
+  <form method="POST" action="{{ url_for('scan') }}">
     <input type="text" name="target" placeholder="example.com or 8.8.8.8" required />
     <br><br>
     <input type="text" name="ports" placeholder="Optional: Ports (e.g., 80,443)" />

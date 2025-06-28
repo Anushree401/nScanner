@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Active Scan | nScanner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nScanner - Active Scan</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -17,9 +17,11 @@
     </div>
   </nav>
 
-  <div class="results">
-    <h2>Active Scan Results</h2>
+  <header>
+    <h1>Active Scan Results</h1>
+  </header>
 
+  <div class="results">
     {% if result | length == 0 %}
       <p>No open ports found or scan returned no data.</p>
     {% else %}
@@ -36,9 +38,11 @@
       </ul>
     {% endif %}
 
-    <details>
-      <summary style="cursor: pointer; color: #888;">View Raw Output</summary>
-      <pre style="color: #aaa;">{{ result | join('\n') }}</pre>
+    <details style="margin-top: 20px;">
+      <summary style="cursor: pointer; color: #00ffe1; font-weight: bold;">View Raw Output</summary>
+      <pre style="color: #aaa; padding: 10px; background: #111; border-radius: 6px; overflow-x: auto;">
+{{ result | join('\n') }}
+      </pre>
     </details>
   </div>
 </body>
