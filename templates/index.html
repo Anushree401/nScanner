@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>nScanner</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
   <nav>
     <div class="logo">nScanner</div>
     <div class="nav-links">
-      <a href="{{ request.path }}">Home</a>
+      <a href="{{ url_for('index') }}">Home</a>
       <a href="{{ url_for('about') }}">About</a>
-      <a href="https://github.com/Anushree401/nScanner">GitHub</a>
+      <a href="https://github.com/Anushree401/nScanner" target="_blank">GitHub</a>
     </div>
   </nav>
 
@@ -23,17 +23,17 @@
   </header>
 
   <form method="POST">
-    <input type="text" name="target" placeholder="example.com or 8.8.8.8" required>
+    <input type="text" name="target" placeholder="example.com or 8.8.8.8" required />
     <br><br>
-    <input type="text" name="ports" placeholder="Optional: Ports (e.g., 80,443)">
+    <input type="text" name="ports" placeholder="Optional: Ports (e.g., 80,443)" />
     <br><br>
     <label style="font-size: 0.9rem;">
-      <input type="checkbox" name="verbose"> Verbose Mode
+      <input type="checkbox" name="verbose" /> Verbose Mode
     </label>
 
     <div class="scan-buttons">
-      <button type="submit" name="scan" value="active" class="scan-button">ACTIVE<br>SCAN</button>
-      <button type="submit" name="scan" value="passive" class="scan-button">PASSIVE<br>SCAN</button>
+      <button type="submit" name="scan" value="active" class="scan-button">ACTIVE<br/>SCAN</button>
+      <button type="submit" name="scan" value="passive" class="scan-button">PASSIVE<br/>SCAN</button>
     </div>
   </form>
 </body>
