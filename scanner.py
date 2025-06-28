@@ -6,9 +6,10 @@ import requests
 import socket
 from ipwhois import IPWhois
 from colorama import init, Fore, Style
+import os
 
 init(autoreset=True)
-API_KEY = "191bbe630ba57e"  
+API_KEY = os.environ.get("API_KEY")  
 
 
 
