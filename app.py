@@ -16,12 +16,12 @@ limiter = Limiter(
 
 @app.route('/', methods=['GET'])
 @limiter.limit("5 per minute")
-def index():
+def home():
     return redirect(url_for('index')) 
 
 @app.route('/scan', methods=['POST'])
 @limiter.limit("5 per minute")
-def index():
+def scan():
     result = []
     recon = {}
 
