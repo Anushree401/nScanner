@@ -25,11 +25,11 @@
 
 ### 📹 Demo Video
 
+> 📽️ Click below to download and view the video:
+
 [![Watch the Demo](introduction/demo/screenshot.png)](introduction/demo/scanning.mp4)
-*Click the image above to download and view the video.*
 
 ---
-
 
 ## 🧠 Prerequisites
 
@@ -99,7 +99,10 @@
 
 ## 📄 License
 
-[!View][LICENSE]
+This project is under a **Restricted Educational Use License**.
+See [`LICENSE`](LICENSE) for full terms.
+
+---
 
 ## 🙋‍♀️ Author
 
@@ -111,6 +114,11 @@
 
 ## 🌟 Contribute?
 
-This project is currently under a restricted-use license. If you’d like to collaborate or fork under a different license, reach out via email.
+This project is under a restricted-use license.
+If you’d like to collaborate or reuse the code under another license, contact me via email.
+
+```
+
+---
 
 ```
