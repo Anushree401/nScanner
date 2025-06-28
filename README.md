@@ -106,7 +106,9 @@ See [`LICENSE`](introduction/LICENSE) for full terms.
 ## 🙋‍♀️ Author
 
 **Anushree Balaji**
+
 📧 [anushree1606balaji@gmail.com](mailto:anushree1606balaji@gmail.com)
+
 🔗 [GitHub – Anushree401](https://github.com/Anushree401)
 
 ---
