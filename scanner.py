@@ -7,7 +7,9 @@ import socket
 from ipwhois import IPWhois
 from colorama import init, Fore, Style
 import os
+from dotenv import load_dotenv
 
+load_dotenv('/etc/secrets/.env')
 init(autoreset=True)
 API_KEY = os.environ.get("API_KEY")  
 
