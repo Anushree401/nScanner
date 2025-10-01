@@ -12,7 +12,7 @@
 - 🔎 Active scanning using `nmap`
 - 👁️ Passive info from HTTP headers, IP info, and WHOIS
 - 🧠 Rate-limiting protection via Flask-Limiter
-- 🎨 Clean UI with Orbitron-styled theme
+- 🎨 Clean UI with Orbitron-styl ed theme
 
 ---
 

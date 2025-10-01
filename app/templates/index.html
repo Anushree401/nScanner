@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nScanner - Port Scanner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .status.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            display: block;
+        }
+        
+        .status.success {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            display: block;
+        }
+        
+        .status.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            display: block;
+        }
+        
+        .results {
+            margin-top: 30px;
+        }
+        
+        .port-result {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .port-result.closed {
+            border-left-color: #ff9800;
+        }
+        
+        .port-result.error {
+            border-left-color: #f44336;
+        }
+        
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        
+        .severity-critical {
+            background: #f44336;
+            color: white;
+        }
+        
+        .severity-high {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .severity-medium {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .severity-low {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .severity-info {
+            background: #9e9e9e;
+            color: white;
+        }
+        
+        .summary {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .summary-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .summary-label {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 nScanner</h1>
+            <p>Safe, non-intrusive port scanner with security checks</p>
+        </header>
+        
+        <div class="card">
+            <h2>New Scan</h2>
+            <form id="scanForm">
+                <div class="form-group">
+                    <label for="host">Target Host</label>
+                    <input type="text" id="host" name="host" placeholder="e.g., scanme.nmap.org or 192.168.1.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ports">Ports</label>
+                    <input type="text" id="ports" name="ports" placeholder="e.g., 22,80,443 or 1-1024" value="1-1024">
+                </div>
+                
+                <button type="submit" id="scanBtn">Start Scan</button>
+            </form>
+            
+            <div id="status" class="status"></div>
+        </div>
+        
+        <div id="resultsCard" class="card" style="display: none;">
+            <h2>Scan Results</h2>
+            <div id="summary" class="summary"></div>
+            <div id="results" class="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('scanForm');
+        const status = document.getElementById('status');
+        const resultsCard = document.getElementById('resultsCard');
+        const resultsDiv = document.getElementById('results');
+        const summaryDiv = document.getElementById('summary');
+        const scanBtn = document.getElementById('scanBtn');
+        
+        function showStatus(message, type = 'info') {
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function showLoading(isLoading) {
+            if (isLoading) {
+                scanBtn.disabled = true;
+                scanBtn.innerHTML = '<span class="loading"></span> Scanning...';
+            } else {
+                scanBtn.disabled = false;
+                scanBtn.textContent = 'Start Scan';
+            }
+        }
+        
+        async function startScan(host, ports) {
+            showLoading(true);
+            showStatus('Initiating scan...', 'info');
+            resultsCard.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({host, ports})
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to start scan');
+                }
+                
+                const data = await response.json();
+                showStatus(`Scan started (ID: ${data.scan_id}). Checking status...`, 'info');
+                
+                // Poll for results
+                pollScanStatus(data.scan_id);
+                
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'error');
+                showLoading(false);
+            }
+        }
+        
+        async function pollScanStatus(scanId) {
+            const maxAttempts = 120; // 2 minutes with 1 second interval
+            let attempts = 0;
+            
+            const interval = setInterval(async () => {
+                attempts++;
+                
+                try {
+                    const response = await fetch(`/api/scan/${scanId}`);
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch scan status');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.status === 'done') {
+                        clearInterval(interval);
+                        showStatus('Scan completed!', 'success');
+                        displayResults(data);
+                        showLoading(false);
+                    } else if (data.status === 'error') {
+                        clearInterval(interval);
+                        showStatus(`Scan failed: ${data.error_message || 'Unknown error'}`, 'error');
+                        showLoading(false);
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        showStatus('Scan timeout - check later', 'error');
+                        showLoading(false);
+                    } else {
+                        showStatus(`Scanning... (Status: ${data.status})`, 'info');
+                    }
+                    
+                } catch (error) {
+                    clearInterval(interval);
+                    showStatus(`Error: ${error.message}`, 'error');
+                    showLoading(false);
+                }
+            }, 1000);
+        }
+        
+        function displayResults(data) {
+            resultsCard.style.display = 'block';
+            
+            // Display summary
+            summaryDiv.innerHTML = `
+                <h3>Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-value">${data.open_ports || 0}</div>
+                        <div class="summary-label">Open Ports</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${data.total_findings || 0}</div>
+                        <div class="summary-label">Total Findings</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${data.risk_level || 'N/A'}</div>
+                        <div class="summary-label">Risk Level</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${data.risk_score || 0}</div>
+                        <div class="summary-label">Risk Score</div>
+                    </div>
+                </div>
+            `;
+            
+            // Display port results
+            if (!data.results || data.results.length === 0) {
+                resultsDiv.innerHTML = '<p>No results to display</p>';
+                return;
+            }
+            
+            let html = '<h3>Port Details</h3>';
+            
+            data.results.forEach(result => {
+                if (result.error) {
+                    html += `
+                        <div class="port-result error">
+                            <strong>Error:</strong> ${result.error}
+                        </div>
+                    `;
+                    return;
+                }
+                
+                if (result.state === 'open') {
+                    html += `
+                        <div class="port-result">
+                            <strong>Port ${result.port}/tcp - ${result.service || 'unknown'}</strong>
+                            ${result.banner ? `<div>Banner: ${result.banner.substring(0, 100)}</div>` : ''}
+                            ${result.mapping_summary ? `<div>Info: ${result.mapping_summary}</div>` : ''}
+                    `;
+                    
+                    if (result.findings && result.findings.length > 0) {
+                        html += '<div style="margin-top: 10px;">';
+                        result.findings.forEach(finding => {
+                            const severity = finding.severity || 'info';
+                            html += `
+                                <div>
+                                    <span class="severity-badge severity-${severity}">${severity.toUpperCase()}</span>
+                                    ${finding.type}: ${finding.detail}
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                    }
+                    
+                    if (result.remediation) {
+                        html += `<div style="margin-top: 10px; color: #666;">Remediation: ${result.remediation}</div>`;
+                    }
+                    
+                    html += '</div>';
+                }
+            });
+            
+            resultsDiv.innerHTML = html;
+            resultsCard.scrollIntoView({behavior: 'smooth'});
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const host = document.getElementById('host').value.trim();
+            const ports = document.getElementById('ports').value.trim();
+            
+            if (!host) {
+                showStatus('Please enter a target host', 'error');
+                return;
+            }
+            
+            await startScan(host, ports);
+        });
+    </script>
+</body>
+</html>
