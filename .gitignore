@@ -1,0 +1,12 @@
+# Suggested .gitignore content for the src directory
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Temporary files (e.g., editors, coverage)
+*~
+.#*
+.DS_Store
