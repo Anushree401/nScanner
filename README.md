@@ -1,120 +1,110 @@
-# 🔍 nScanner – Web-Based InfoSec Recon Tool
+# 🔍 nScanner – Safe, Web-Based Network Recon Tool
 
-**nScanner** is a cybersecurity utility that performs **active port scanning** and **passive reconnaissance** on domains or IPs. Built with **Flask**, **Python-Nmap**, and **IPWhois**, it’s designed to be simple, educational, and powerful.
+**nScanner** is a cybersecurity utility that performs **non-intrusive port scanning** and generates a risk assessment based on observed service banners and configurations. The core logic is built in Python, exposed via a high-performance **FastAPI** backend for a robust, scalable architecture.
 
 > ⚠️ For educational and personal use only. Not for unauthorized or commercial use.
 
----
+-----
 
 ## 🚀 Features
 
-- 🌐 Web-based interface (Flask)
-- 🔎 Active scanning using `nmap`
-- 👁️ Passive info from HTTP headers, IP info, and WHOIS
-- 🧠 Rate-limiting protection via Flask-Limiter
-- 🎨 Clean UI with Orbitron-styl ed theme
+  * **FastAPI Backend:** Built on Python's FastAPI for asynchronous, high-speed, scalable performance.
+  * **Safety-Focused Scanning:** Uses safe, non-exploitative TCP socket checks (not Nmap) to gather service banners, HTTP headers, and TLS certificate info.
+  * **Risk Assessment:** Calculates a vulnerability risk score and level for scanned hosts.
+  * **RESTful API:** All functionality is accessible via well-defined, documented REST endpoints.
 
----
-
-## 🎥 Demo
-
-### 📸 Screenshot
-
-![nScanner Screenshot](introduction/demo/homepage.png)
-
-### 📹 Demo Video
-
-> 📽️ Click below to download and view the video:
-
-[![Watch the Demo](introduction/demo/screenshot.png)](introduction/demo/scanning.mp4)
-
----
+-----
 
 ## 🧠 Prerequisites
 
-- Python 3.10+
-- `nmap` installed and added to PATH (for local scan mode)
+  * Python 3.8+ (3.11/3.12 recommended for development)
+  * **Local Setup:** A working Python virtual environment.
 
----
+-----
 
-## 💻 Local Setup Instructions
+## 💻 Local Setup Instructions (FastAPI)
 
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/Anushree401/nScanner.git
-   cd nScanner
-   ```
+These instructions set up the primary FastAPI web server.
 
-2. **Create virtual environment and activate**
+1.  **Clone the repository**
 
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate    # On Windows
-   # OR
-   source venv/bin/activate # On Linux/macOS
-   ```
+    ```bash
+    git clone https://github.com/Anushree401/nScanner.git
+    cd nScanner
+    ```
 
-3. **Install dependencies**
+2.  **Create and activate virtual environment**
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+    ```bash
+    python -m venv svenv
+    .\svenv\Scripts\activate  # On Windows PowerShell
+    # OR
+    source svenv/bin/activate # On Linux/macOS
+    ```
 
-4. **Run the app**
+3.  **Install dependencies**
+    The project uses concurrent processing and database management, so we need the production dependencies.
 
-   ```bash
-   python app.py
-   ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-5. **Visit it**
+4.  **Run the FastAPI server**
+    The application runs on port `8000` by default.
 
-   ```
-   http://localhost:5000
-   ```
+    ```bash
+    uvicorn app.main:app --reload
+    ```
 
----
+-----
 
-## 🐳 Run with Docker (No need to install Python or nmap)
+## 🐳 Run with Docker (Recommended for Deployment)
 
-1. **Build the Docker image**
+This uses the containerized environment, removing the need for local setup.
 
-   ```bash
-   docker build -t nscanner .
-   ```
+1.  **Build the Docker image**
+    (The container runs the FastAPI app on port 8000).
 
-2. **Run the container**
+    ```bash
+    docker build -t nscanner .
+    ```
 
-   ```bash
-   docker run -p 5000:5000 nscanner
-   ```
+2.  **Run the container**
+    This maps host port 5000 to the container's internal port 8000.
 
-3. **Open in browser**
+    ```bash
+    docker run -p 5000:8000 nscanner
+    ```
 
-   ```
-   http://localhost:5000
-   ```
+-----
 
----
+## 💡 Using the API Endpoints
+
+The web user interface is currently under development. However, the core asynchronous scanning endpoints are fully functional and accessible through the interactive API documentation.
+
+### The Endpoints are Working\!
+
+You can begin running and analyzing scans immediately.
+
+1.  **Access the Interactive Documentation (Swagger UI):**
+    Open your browser to: **`http://127.0.0.1:8000/docs`** (or `http://localhost:5000/docs` if using the Docker setup).
+
+2.  **How to Use:**
+
+      * **Start a Scan (`POST /api/scan`):** Click "Try it out," enter the target host and ports (e.g., `"ports": "22,80,443"`), and click **Execute**. The response will contain a `scan_id`.
+      * **Get Results (`GET /api/scan/{scan_id}`):** Use the `scan_id` from the previous step to poll this endpoint. The final response (`"status": "done"`) will contain the full scan results, risk score, and detailed findings.
+
+-----
 
 ## 📄 License
 
 This project is under a **Restricted Educational Use License**.
-See [`LICENSE`](introduction/LICENSE) for full terms.
 
----
+-----
 
 ## 🙋‍♀️ Author
 
 **Anushree Balaji**
 
 📧 [anushree1606balaji@gmail.com](mailto:anushree1606balaji@gmail.com)
-
 🔗 [GitHub – Anushree401](https://github.com/Anushree401)
-
----
-
-## 🌟 Contribute?
-
-This project is under a restricted-use license.
-If you’d like to collaborate or reuse the code under another license, contact me via email.
-
