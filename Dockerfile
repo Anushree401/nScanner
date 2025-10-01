@@ -1,3 +1,4 @@
+# Dockerfile
 # Base image with Python
 FROM python:3.10-slim
 
@@ -14,8 +15,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy all source files
 COPY . .
 
-# Run the app
-CMD ["python", "app.py"]
+# Run the app (Fixed to run the FastAPI application using uvicorn)
+# The entry point is app/main.py, running app.main:app on port 8000.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
-EXPOSE 5000
-
+# Expose port 8000 (Fixed to match the FastAPI port)
+EXPOSE 8000

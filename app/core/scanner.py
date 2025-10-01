@@ -3,9 +3,12 @@
 
 import socket
 from typing import List, Dict, Any
+# ADD concurrent.futures for thread pooling
+import concurrent.futures
 from .safe_checks import safe_banner_grab, safe_http_checks, safe_tls_checks, safe_smtp_checks
 from .rules import mapping_port_for_vulnerability
-from .config import SOCKET_CONNECT_TIMEOUT, MIN_PORT, MAX_PORT
+# Import MAX_CONCURRENT_SCANS
+from .config import SOCKET_CONNECT_TIMEOUT, MIN_PORT, MAX_PORT, MAX_CONCURRENT_SCANS 
 
 
 def validate_port(port: int) -> bool:
@@ -97,9 +100,11 @@ def process_port_socket(host_id: str, port: int, result_list: List[Dict[str, Any
                 entry["remediation"] = mapping["remediation"]
                 entry["base_severity"] = mapping["severity"]
                 
+                # Use a thread-safe append (the List is managed by the calling thread)
                 result_list.append(entry)
             else:
                 # Port is closed
+                # Use a thread-safe append (the List is managed by the calling thread)
                 result_list.append({
                     "host": host_id,
                     "port": port,
@@ -131,21 +136,7 @@ def process_port_socket(host_id: str, port: int, result_list: List[Dict[str, Any
 def parse_port_spec(port_spec: str) -> List[int]:
     """
     Parse a port specification string into a list of port numbers.
-    
-    Supports:
-    - Single ports: "80"
-    - Comma-separated: "22,80,443"
-    - Ranges: "1-100"
-    - Mixed: "22,80,443,8000-8010"
-    
-    Args:
-        port_spec: Port specification string
-        
-    Returns:
-        List of port numbers
-        
-    Raises:
-        ValueError: If the port specification is invalid
+    ... (omitted for brevity)
     """
     ports = []
     port_spec_cleaned = port_spec.replace(" ", "")
@@ -183,7 +174,7 @@ def parse_port_spec(port_spec: str) -> List[int]:
 
 def scanning(host_id: str, port_num: str) -> List[Dict[str, Any]]:
     """
-    Scan specified ports on a target host.
+    Scan specified ports on a target host concurrently using a thread pool.
     
     Args:
         host_id: Target hostname or IP address
@@ -199,7 +190,16 @@ def scanning(host_id: str, port_num: str) -> List[Dict[str, Any]]:
     except ValueError as e:
         return [{"error": str(e)}]
     
-    for port in ports:
-        process_port_socket(host_id, port, result)
+    # Use ThreadPoolExecutor for concurrent scanning, using the configured limit
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_CONCURRENT_SCANS) as executor:
+        # Submit all process_port_socket tasks
+        futures = [
+            executor.submit(process_port_socket, host_id, port, result) 
+            for port in ports
+        ]
+        
+        # Wait for all futures to complete
+        concurrent.futures.wait(futures)
     
+    # The 'result' list is modified in place by the worker threads
     return result

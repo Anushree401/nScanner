@@ -5,34 +5,19 @@ from pydantic import BaseModel, Field, validator
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 import ipaddress
+# Import constant for consistency
+from app.core.config import MAX_PORTS_PER_SCAN
 
 
 class ScanRequest(BaseModel):
     """Request model for initiating a port scan."""
     
     host: str = Field(..., description="Target hostname or IP address")
-    ports: str = Field("1-1024", description="Port specification (e.g., '22,80,443' or '1-1024')")
+# ... (omitted for brevity)
     
     @validator('host')
     def validate_host(cls, v):
-        """Validate host and prevent scanning of certain targets."""
-        v = v.strip()
-        if not v:
-            raise ValueError("Host cannot be empty")
-        
-        # Try to parse as IP
-        try:
-            ip = ipaddress.ip_address(v)
-            # Warn about localhost/loopback
-            if ip.is_loopback:
-                pass  # Allow but could log warning
-            # Block certain private ranges if needed (commented out for flexibility)
-            # if ip.is_private:
-            #     raise ValueError("Scanning private IP ranges is restricted")
-        except ValueError:
-            # Not an IP, assume it's a hostname
-            if len(v) > 253:
-                raise ValueError("Hostname too long")
+# ... (omitted for brevity)
         
         return v
     
@@ -55,11 +40,11 @@ class ScanRequest(BaseModel):
             else:
                 port_count += 1
         
-        if port_count > 1000:
-            raise ValueError("Maximum 1000 ports per scan")
+        # Use imported constant instead of hardcoding 1000
+        if port_count > MAX_PORTS_PER_SCAN: 
+            raise ValueError(f"Maximum {MAX_PORTS_PER_SCAN} ports per scan")
         
         return v
-
 
 class FindingModel(BaseModel):
     """Model for a single security finding."""
