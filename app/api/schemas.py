@@ -13,12 +13,10 @@ class ScanRequest(BaseModel):
     """Request model for initiating a port scan."""
     
     host: str = Field(..., description="Target hostname or IP address")
-# ... (omitted for brevity)
-    
+    ports: str = Field(default="1-1024", description="Port specification (e.g., '22,80,443' or '1-1024')")
+
     @validator('host')
-    def validate_host(cls, v):
-# ... (omitted for brevity)
-        
+    def validate_host(cls, v):        
         return v
     
     @validator('ports')

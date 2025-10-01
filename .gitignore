@@ -1,12 +1,12 @@
-# Suggested .gitignore content for the src directory
+# Virtual environment
+nscan_venv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
 
-# Temporary files (e.g., editors, coverage)
-*~
-.#*
+# IDE and OS specific files
+.idea/
+.vscode/
 .DS_Store
