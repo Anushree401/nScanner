@@ -58,26 +58,6 @@ These instructions set up the primary FastAPI web server.
 
 -----
 
-## 🐳 Run with Docker (Recommended for Deployment)
-
-This uses the containerized environment, removing the need for local setup.
-
-1.  **Build the Docker image**
-    (The container runs the FastAPI app on port 8000).
-
-    ```bash
-    docker build -t nscanner .
-    ```
-
-2.  **Run the container**
-    This maps host port 5000 to the container's internal port 8000.
-
-    ```bash
-    docker run -p 5000:8000 nscanner
-    ```
-
------
-
 ## 💻 How to Run Guide (FastAPI)
 
 ## 1\. Start a New Scan (`POST /api/scan`)
