@@ -1,5 +1,10 @@
 # app/core/rules.py
-"""Port to vulnerability mapping with remediation guidance."""
+"""Port to vulnerability mapping with remediation guidance.
+   Need to integrate with risk scoring and scan results.
+   Need to introduce API to fetch this data per port.
+   Need to integrate with AI assistance for dynamic analysis, instead of static mapping for limited ports.
+   With this, all ports will be covered intelligently.
+"""
 
 from typing import Dict, TypedDict
 
