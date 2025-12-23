@@ -1,5 +1,6 @@
 # Virtual environment
 nscan_venv/
+svenv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
