@@ -1,0 +1,9 @@
+Connect and capture server-presented certs (leaf + intermediates).
+Parse certs, extract Subject, Issuer, SAN, validity, fingerprints, key size, algorithms.
+Build path to local trust store (use system trust store or embedded CA bundle).
+Verify signatures for each link.
+Check hostname matches SAN.
+Do revocation checks (OCSP, prefer stapled OCSP). Allow configurable policy (hard/soft-fail).
+Report TLS version & cipher suite used.
+Produce structured JSON report and friendly human output.
+Optionally: pinning, CT logs, CT SCT checks, aggressive policy for enterprise.
