@@ -1,6 +1,8 @@
-# Virtual environment and files that come with it 
-svenv
-advancements.txt
+# Virtual environment
+nscan_venv/
+venv/
+svenv/
+.env/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
