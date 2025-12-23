@@ -28,15 +28,22 @@ class ScanRequest(BaseModel):
         
         # Count total ports to prevent abuse
         port_count = 0
-        for part in v.split(','):
-            if '-' in part:
-                try:
-                    start, end = map(int, part.strip().split('-'))
-                    port_count += (end - start + 1)
-                except:
-                    pass
-            else:
-                port_count += 1
+        if '-' in v:
+            try:
+                start,end = map(int, v.split('-'))
+                port_count = end-start +1
+            except:
+                pass 
+        elif ',' in v:
+            for part in v.split(','):
+                if '-' in part:
+                    try:
+                        start, end = map(int, part.strip().split('-'))
+                        port_count += (end - start + 1)
+                    except:
+                        pass
+                else:
+                    port_count += 1
         
         # Use imported constant instead of hardcoding 1000
         if port_count > MAX_PORTS_PER_SCAN: 
