@@ -11,8 +11,6 @@ GEMINI_URL = (
     "models/gemini-2.5-flash:generateContent"
 )
 
-print("GEMINI_API_KEY =", os.getenv("GEMINI_API_KEY"))
-
 def summarize_with_gemini(scan_results:dict,risk_summary:dict) -> dict:
     """
     Send scan results to Gemini and get AI-enhanced summary.
