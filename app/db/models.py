@@ -41,6 +41,12 @@ class Scan(SQLModel, table=True):
         default=None,
         description="Full scan results as JSON"
     )
+    
+    ai_summary: Optional[Dict] = Field(
+        default=None,
+        sa_column=Column(JSON)
+    )
+    
     error_message: Optional[str] = Field(default=None, description="Error message if scan failed")
 
 

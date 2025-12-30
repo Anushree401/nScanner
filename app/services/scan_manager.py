@@ -88,6 +88,10 @@ async def start_scan_async(host: str, ports: str = "1-1024") -> str:
                 risk_summary = summarize_scan(results)
                 
                 # AI-enhanced summary (Gemini)
+                # try:
+                #     ai_summary = summarize_with_gemini(results, risk_summary)
+                # except Exception as ai_err:
+                #     ai_summary = None
                 ai_summary = summarize_with_gemini(results, risk_summary)
                 
                 completed_at = datetime.utcnow()

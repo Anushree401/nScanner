@@ -96,24 +96,32 @@ class ScanStatus(BaseModel):
 
 class ScanResult(BaseModel):
     """Complete scan result model."""
-    
+
     scan_id: str
     host: str
     ports: str
     status: str
-    ports_scanned: int
-    open_ports: int
-    closed_ports: int
-    error_count: int
-    elapsed: float
-    risk_score: int
-    risk_level: str
-    total_findings: int
-    critical_findings: int
-    high_findings: int
-    results: List[PortResult]
+
+    ports_scanned: Optional[int] = None
+    open_ports: Optional[int] = None
+    closed_ports: Optional[int] = None
+    error_count: Optional[int] = None
+
+    elapsed: Optional[float] = None
+
+    risk_score: Optional[int] = None
+    risk_level: Optional[str] = None
+
+    total_findings: Optional[int] = None
+    critical_findings: Optional[int] = None
+    high_findings: Optional[int] = None
+
+    results: Optional[List[PortResult]] = None
+    ai_summary: Optional[Dict[str, Any]] = None
+
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
+    error_message: Optional[str] = None
 
 
 class ScanListItem(BaseModel):
