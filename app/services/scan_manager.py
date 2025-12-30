@@ -11,6 +11,7 @@ from app.core.scanner import scanning
 from app.core.risk import summarize_scan
 from app.db.models import Scan, init_db
 from app.core.config import MAX_CONCURRENT_SCANS
+from app.services.gemini_service import summarize_with_gemini
 
 # In-memory store for quick lookups and active scan tracking
 ACTIVE_SCANS: Dict[str, Dict[str, Any]] = {}
@@ -86,6 +87,9 @@ async def start_scan_async(host: str, ports: str = "1-1024") -> str:
                 # Compute risk summary
                 risk_summary = summarize_scan(results)
                 
+                # AI-enhanced summary (Gemini)
+                ai_summary = summarize_with_gemini(results, risk_summary)
+                
                 completed_at = datetime.utcnow()
                 
                 # Update database with results
@@ -103,6 +107,7 @@ async def start_scan_async(host: str, ports: str = "1-1024") -> str:
                         db_scan.total_findings = risk_summary["total_findings"]
                         db_scan.critical_findings = risk_summary["critical_findings"]
                         db_scan.high_findings = risk_summary["high_findings"]
+                        db_scan.ai_summary = ai_summary
                         db_scan.results = results
                         sess.add(db_scan)
                         sess.commit()
@@ -111,6 +116,7 @@ async def start_scan_async(host: str, ports: str = "1-1024") -> str:
                 ACTIVE_SCANS[scan_id]["status"] = "done"
                 ACTIVE_SCANS[scan_id]["result"] = results
                 ACTIVE_SCANS[scan_id]["risk_summary"] = risk_summary
+                ACTIVE_SCANS[scan_id]["ai_summary"] = ai_summary
                 
             except Exception as e:
                 error_msg = str(e)
@@ -167,6 +173,7 @@ def get_scan(scan_id: str) -> Optional[Dict[str, Any]]:
                 "high_findings": db_scan.high_findings,
                 "ports_scanned": (db_scan.open_ports or 0) + (db_scan.closed_ports or 0),
                 "results": db_scan.results or [],
+                "ai_summary": db_scan.ai_summary,
                 "error_message": db_scan.error_message
             }
             return result
