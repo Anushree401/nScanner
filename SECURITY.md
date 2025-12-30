@@ -29,9 +29,9 @@ If you discover a security vulnerability in **nScanner**, please report it respo
 
 * GitHub Security Advisory:
   `Repository → Security → Report a vulnerability`
-* Email (if provided):
-  `security@<your-domain>` *(optional – add only if you want)*
-
+* Email:
+  `anushree1606balaji@gmail.com`
+  
 ---
 
 ## What to include in your report
